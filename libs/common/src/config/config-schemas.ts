@@ -1,8 +1,8 @@
 import * as Joi from 'joi';
 
 const developmentSchema = Joi.object({
-  HOST: Joi.string().hostname().optional(),
-  PORT: Joi.number().port().optional(),
+  HOST: Joi.string().hostname().required(),
+  PORT: Joi.number().port().required(),
 });
 
 const productionSchema = developmentSchema.append({});

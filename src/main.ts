@@ -18,8 +18,8 @@ async function bootstrap() {
   app.enableCors();
   app.use(helmet());
 
-  const HOST = configService.get<string>('HOST') || 'localhost';
-  const PORT = configService.get<number>('PORT') || 3000;
+  const HOST = configService.get<string>('HOST');
+  const PORT = configService.get<number>('PORT');
 
   await app.listen(PORT, HOST, () => {
     logger.log(`Service is running on http://${HOST}:${PORT}`);
