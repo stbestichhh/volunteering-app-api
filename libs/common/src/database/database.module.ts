@@ -1,7 +1,10 @@
-import { Module } from '@nestjs/common';
+import { Logger, Module } from '@nestjs/common';
 import { ConfigModule, ConfigService } from '@nestjs/config';
 import * as Joi from 'joi';
 import { SequelizeModule } from '@nestjs/sequelize';
+import { UserModel } from '@app/common/database/models/user.model';
+import { LoggerModule } from '@app/common/logger';
+import { Logger as PinoLogger } from 'nestjs-pino';
 
 @Module({
   imports: [
@@ -16,22 +19,23 @@ import { SequelizeModule } from '@nestjs/sequelize';
       }),
     }),
     SequelizeModule.forRootAsync({
-      useFactory: (configService: ConfigService) => ({
+      useFactory: (configService: ConfigService, logger: Logger) => ({
         dialect: 'postgres',
         host: configService.get<string>('POSTGRES_HOST'),
         port: configService.get<number>('POSTGRES_PORT'),
         username: configService.get<string>('POSTGRES_USER'),
         password: configService.get<string>('POSTGRES_PASSWORD'),
         database: configService.get<string>('POSTGRES_DB'),
-        models: [],
+        models: [UserModel],
         autoLoadModels: true,
         sync: {
           alter: true,
           force: process.env.NODE_ENV === 'development',
         },
+        logging: (msg) => logger.log(msg),
       }),
-      imports: [ConfigModule],
-      inject: [ConfigService],
+      imports: [ConfigModule, LoggerModule],
+      inject: [ConfigService, PinoLogger],
     }),
   ],
 })
