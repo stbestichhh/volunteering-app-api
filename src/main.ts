@@ -11,6 +11,7 @@ async function bootstrap() {
     cors: true,
     bufferLogs: true,
   });
+  app.setGlobalPrefix('api');
 
   const logger = new Logger(bootstrap.name);
   const configService = app.get<ConfigService>(ConfigService);
@@ -36,7 +37,7 @@ async function bootstrap() {
 
   await app.listen(PORT, HOST, () => {
     logger.log(`Service is running on http://${HOST}:${PORT}`);
-    logger.log(`API Documentation is available on /docs/api`);
+    logger.log(`API Documentation is available on /docs`);
   });
 }
 bootstrap();
