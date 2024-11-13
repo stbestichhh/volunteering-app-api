@@ -1,3 +1,7 @@
+# ssl
+cert.pem
+key.pem
+
 # yarn
 .yarn
 
