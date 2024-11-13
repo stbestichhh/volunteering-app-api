@@ -5,12 +5,16 @@ import {
   IsString,
   IsStrongPassword,
   Length,
+  Matches,
 } from 'class-validator';
 import { ApiProperty } from '@nestjs/swagger';
 
 export class UserDto implements UserCreationAttributes {
   @IsString()
   @IsNotEmpty()
+  @Matches(/^[A-Z][a-zA-Z'-]+ [A-Z][a-zA-Z'-]+(?: [A-Z][a-zA-Z'-]+)*$/, {
+    message: 'Fullname must be type of: Name Surname',
+  })
   @ApiProperty({
     type: 'string',
     description: 'Users name and surname',

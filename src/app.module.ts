@@ -3,9 +3,16 @@ import { LoggerModule } from '@app/common/logger';
 import { ConfigModule } from '@app/common/config';
 import { UsersModule } from './users/users.module';
 import { DatabaseModule } from '@app/common/database';
+import { AuthModule } from './auth/auth.module';
 
 @Module({
-  imports: [LoggerModule, ConfigModule, UsersModule, DatabaseModule],
+  imports: [
+    LoggerModule,
+    ConfigModule,
+    UsersModule,
+    DatabaseModule,
+    AuthModule,
+  ],
   controllers: [],
   providers: [],
 })

@@ -9,5 +9,6 @@ import { UsersRepository } from './users.repository';
   providers: [UsersService, UsersRepository],
   controllers: [UsersController],
   imports: [DatabaseModule.forFeature([UserModel])],
+  exports: [UsersService],
 })
 export class UsersModule {}

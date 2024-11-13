@@ -20,8 +20,8 @@ export class UsersService {
   public async create(dto: UserDto) {
     const hash = await this.hashPassword(dto.password);
     return await this.userRepository.create({
-      password: hash,
       ...dto,
+      password: hash,
     });
   }
 

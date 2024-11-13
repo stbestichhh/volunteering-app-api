@@ -9,14 +9,26 @@ import {
   Post,
   Put,
   Query,
+  UseGuards,
 } from '@nestjs/common';
 import { UsersService } from './users.service';
 import { UserDto } from './dto/user.dto';
 import { WhereOptions } from 'sequelize';
 import { UserModel } from '@app/common/database/models/user.model';
-import { ApiOperation, ApiQuery, ApiResponse, ApiTags } from '@nestjs/swagger';
+import {
+  ApiCookieAuth,
+  ApiOperation,
+  ApiQuery,
+  ApiResponse,
+  ApiTags,
+  ApiUnauthorizedResponse,
+} from '@nestjs/swagger';
+import { AuthGuard } from 'libs/common/src/guards';
 
 @ApiTags('Users')
+@ApiCookieAuth()
+@ApiUnauthorizedResponse({ description: 'User unauthorized' })
+@UseGuards(AuthGuard)
 @Controller('users')
 export class UsersController {
   constructor(private readonly userService: UsersService) {}
