@@ -51,7 +51,7 @@ export abstract class AbstractRepository<TModel extends Model> {
 
   public async findAll(options?: WhereOptions<TModel>) {
     const entities = await this.model.findAll({ where: options });
-    if (!entities.length) {
+    if (options && !entities.length) {
       throw new NotFoundException(
         `Entity ${this.model.name} not found by options: ${JSON.stringify(options)}`
       );

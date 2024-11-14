@@ -54,7 +54,7 @@ export class AuthController {
   @Get('/logout')
   public async logout(@Request() req: e.Request) {
     req.session.destroy((err: Error) => {
-      if (err) throw new InternalServerErrorException(e);
+      if (err) throw new InternalServerErrorException(err);
     });
     return { message: 'User sesion has been destroyed' };
   }

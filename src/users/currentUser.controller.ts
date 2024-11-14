@@ -5,6 +5,8 @@ import {
   HttpStatus,
   Put,
   UseGuards,
+  Request,
+  InternalServerErrorException,
 } from '@nestjs/common';
 import { UsersService } from './users.service';
 import { UserDto } from './dto/user.dto';
@@ -18,6 +20,7 @@ import {
 } from '@nestjs/swagger';
 import { AuthGuard } from 'libs/common/src/guards';
 import { CurrentUser } from '@app/common/decorators';
+import e from 'express';
 
 @ApiTags('Current user')
 @ApiCookieAuth()
@@ -39,8 +42,12 @@ export class CurrentUserController {
   @ApiResponse({ status: HttpStatus.OK, type: UserModel })
   public async update(
     @CurrentUser('id') currentUserId: string,
-    @Body() dto: UserDto
+    @Body() dto: UserDto,
+    @Request() req: e.Request
   ) {
-    return await this.userService.update(currentUserId, dto);
+    await this.userService.update(currentUserId, dto);
+    req.session.destroy((err: Error) => {
+      if (err) throw new InternalServerErrorException(err);
+    });
   }
 }
