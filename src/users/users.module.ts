@@ -4,10 +4,11 @@ import { UsersController } from './users.controller';
 import { DatabaseModule } from '@app/common/database';
 import { UserModel } from '@app/common/database/models/user.model';
 import { UsersRepository } from './users.repository';
+import { CurrentUserController } from './currentUser.controller';
 
 @Module({
   providers: [UsersService, UsersRepository],
-  controllers: [UsersController],
+  controllers: [UsersController, CurrentUserController],
   imports: [DatabaseModule.forFeature([UserModel])],
   exports: [UsersService],
 })

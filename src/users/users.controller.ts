@@ -24,11 +24,13 @@ import {
   ApiUnauthorizedResponse,
 } from '@nestjs/swagger';
 import { AuthGuard } from 'libs/common/src/guards';
+import { Private } from '@app/common/decorators';
 
 @ApiTags('Users')
 @ApiCookieAuth()
 @ApiUnauthorizedResponse({ description: 'User unauthorized' })
 @UseGuards(AuthGuard)
+@Private()
 @Controller('users')
 export class UsersController {
   constructor(private readonly userService: UsersService) {}

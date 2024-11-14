@@ -43,7 +43,7 @@ export abstract class AbstractRepository<TModel extends Model> {
     const entity = await this.model.findOne({ where: options });
     if (!entity) {
       throw new NotFoundException(
-        `Entity ${this.model.name} not found by options: ${options}`
+        `Entity ${this.model.name} not found by options: ${JSON.stringify(options)}`
       );
     }
     return entity as TModel;
@@ -53,7 +53,7 @@ export abstract class AbstractRepository<TModel extends Model> {
     const entities = await this.model.findAll({ where: options });
     if (!entities.length) {
       throw new NotFoundException(
-        `Entity ${this.model.name} not found by options: ${options}`
+        `Entity ${this.model.name} not found by options: ${JSON.stringify(options)}`
       );
     }
     return entities as Array<TModel>;
