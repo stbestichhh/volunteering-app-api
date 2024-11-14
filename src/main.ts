@@ -9,6 +9,8 @@ import * as session from 'express-session';
 import * as passport from 'passport';
 import { HttpsOptions } from '@nestjs/common/interfaces/external/https-options.interface';
 import * as fs from 'node:fs';
+import { Redis } from 'ioredis';
+import RedisStore from 'connect-redis';
 
 function getHttpsOptions(): HttpsOptions {
   try {
@@ -39,6 +41,14 @@ async function bootstrap() {
   const document = SwaggerModule.createDocument(app, swaggerConfig);
   SwaggerModule.setup('/docs', app, document);
 
+  const redis = new Redis({
+    password: configService.get<string>('REDIS_PASSWORD'),
+  });
+  const redisStore = new RedisStore({
+    client: redis,
+    prefix: 'volunteering-app:',
+  });
+
   app.use(
     session({
       secret: configService.get<string>('SESSION_SECRET'),
@@ -51,6 +61,7 @@ async function bootstrap() {
         secure: true,
         httpOnly: true,
       },
+      store: redisStore,
     })
   );
   app.use(passport.initialize());
