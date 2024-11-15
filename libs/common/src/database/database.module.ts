@@ -5,6 +5,7 @@ import { SequelizeModule } from '@nestjs/sequelize';
 import { UserModel } from '@app/common/database/models/user.model';
 import { LoggerModule } from '@app/common/logger';
 import { Logger as PinoLogger } from 'nestjs-pino';
+import { ProjectModel } from '@app/common/database/models';
 
 @Module({
   imports: [
@@ -26,7 +27,7 @@ import { Logger as PinoLogger } from 'nestjs-pino';
         username: configService.get<string>('POSTGRES_USER'),
         password: configService.get<string>('POSTGRES_PASSWORD'),
         database: configService.get<string>('POSTGRES_DB'),
-        models: [UserModel],
+        models: [UserModel, ProjectModel],
         autoLoadModels: true,
         sync: {
           alter: true,

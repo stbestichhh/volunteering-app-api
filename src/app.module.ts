@@ -4,6 +4,7 @@ import { ConfigModule } from '@app/common/config';
 import { UsersModule } from './users/users.module';
 import { DatabaseModule } from '@app/common/database';
 import { AuthModule } from './auth/auth.module';
+import { ProjectsModule } from './projects/projects.module';
 
 @Module({
   imports: [
@@ -12,6 +13,7 @@ import { AuthModule } from './auth/auth.module';
     UsersModule,
     DatabaseModule,
     AuthModule,
+    ProjectsModule,
   ],
   controllers: [],
   providers: [],
