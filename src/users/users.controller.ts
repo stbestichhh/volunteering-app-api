@@ -12,7 +12,7 @@ import {
   UseGuards,
 } from '@nestjs/common';
 import { UsersService } from './users.service';
-import { UserDto } from './dto/user.dto';
+import { CreateUserDto, UpdateUserDto } from './dto';
 import { WhereOptions } from 'sequelize';
 import { UserModel } from '@app/common/database/models/user.model';
 import {
@@ -70,7 +70,7 @@ export class UsersController {
     status: HttpStatus.INTERNAL_SERVER_ERROR,
     description: 'Error while creating user',
   })
-  public async create(@Body() dto: UserDto) {
+  public async create(@Body() dto: CreateUserDto) {
     return await this.userService.create(dto);
   }
 
@@ -81,7 +81,7 @@ export class UsersController {
     status: HttpStatus.NOT_FOUND,
     description: 'User not found by id',
   })
-  public async update(@Param('id') userId: string, @Body() dto: UserDto) {
+  public async update(@Param('id') userId: string, @Body() dto: UpdateUserDto) {
     return await this.userService.update(userId, dto);
   }
 

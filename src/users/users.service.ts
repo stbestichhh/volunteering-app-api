@@ -1,6 +1,6 @@
 import { Injectable } from '@nestjs/common';
 import { UsersRepository } from './users.repository';
-import { UserDto } from './dto/user.dto';
+import { CreateUserDto, UpdateUserDto } from './dto';
 import { WhereOptions } from 'sequelize';
 import { UserModel } from '@app/common/database/models/user.model';
 import * as bcrypt from 'bcrypt';
@@ -17,7 +17,7 @@ export class UsersService {
     return await this.userRepository.findAll(options);
   }
 
-  public async create(dto: UserDto) {
+  public async create(dto: CreateUserDto) {
     const hash = await this.hashPassword(dto.password);
     return await this.userRepository.create({
       ...dto,
@@ -25,7 +25,7 @@ export class UsersService {
     });
   }
 
-  public async update(userId: string, dto: UserDto) {
+  public async update(userId: string, dto: UpdateUserDto) {
     return await this.userRepository.update(userId, dto);
   }
 

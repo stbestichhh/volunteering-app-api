@@ -2,8 +2,9 @@ import { Injectable } from '@nestjs/common';
 import { ProjectsRepository } from './projects.repository';
 import { WhereOptions } from 'sequelize';
 import { ProjectModel } from '@app/common/database/models';
-import { ProjectDto } from './dto';
+import { CreateProjectDto } from './dto';
 import { CreationAttributes } from 'sequelize/types/model';
+import { UpdateProjectDto } from './dto/updateProject.dto';
 
 @Injectable()
 export class ProjectsService {
@@ -23,14 +24,18 @@ export class ProjectsService {
     });
   }
 
-  public async create(ownerId: string, dto: ProjectDto) {
+  public async create(ownerId: string, dto: CreateProjectDto) {
     return await this.projectRespository.create({
       ...dto,
       user_id: ownerId,
     } as CreationAttributes<ProjectModel>);
   }
 
-  public async update(ownerId: string, projectId: string, dto: ProjectDto) {
+  public async update(
+    ownerId: string,
+    projectId: string,
+    dto: UpdateProjectDto
+  ) {
     const project = await this.getOneById(ownerId, projectId);
     return await project.set(dto).save();
   }

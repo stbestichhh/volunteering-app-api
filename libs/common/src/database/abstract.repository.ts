@@ -22,7 +22,7 @@ export abstract class AbstractRepository<TModel extends Model> {
       })
       .catch((e) => {
         if (e instanceof ValidationError) {
-          throw new ForbiddenException('User already exists');
+          throw new ForbiddenException(`${this.model.name} already exists`);
         }
         this.logger.error(e);
         throw new InternalServerErrorException();

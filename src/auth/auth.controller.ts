@@ -15,7 +15,7 @@ import {
   ApiTags,
   ApiUnauthorizedResponse,
 } from '@nestjs/swagger';
-import { UserDto } from '../users/dto/user.dto';
+import { CreateUserDto } from '../users/dto/createUser.dto';
 import { UsersService } from '../users/users.service';
 import { UserModel } from '@app/common/database/models';
 import e from 'express';
@@ -33,7 +33,7 @@ export class AuthController {
     description: 'Unexpected error while creating new user',
   })
   @Post('/signup')
-  public async create(@Body() dto: UserDto) {
+  public async create(@Body() dto: CreateUserDto) {
     return await this.usersService.create(dto);
   }
 

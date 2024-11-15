@@ -11,14 +11,15 @@ import { UserModel } from '@app/common/database/models/user.model';
 export enum ProjectStatus {
   OPENED = 'OPENED',
   CLOSED = 'CLOSED',
+  IN_PROGRESS = 'IN_PROGRESS',
 }
 
 export interface ProjectCreationAttributes {
   name: string;
   description?: string;
   status?: ProjectStatus;
-  start_date?: string;
-  end_date?: string;
+  start_date: string;
+  end_date: string;
 }
 
 @Table({ tableName: 'projects', timestamps: true })
@@ -69,10 +70,14 @@ export class ProjectModel extends Model<
     enum: ProjectStatus,
   })
   @Column({
-    type: DataType.ENUM(ProjectStatus.OPENED, ProjectStatus.CLOSED),
+    type: DataType.ENUM(
+      ProjectStatus.OPENED,
+      ProjectStatus.CLOSED,
+      ProjectStatus.IN_PROGRESS
+    ),
     allowNull: true,
   })
-  status?: 'OPENED' | 'CLOSED';
+  status?: ProjectStatus;
 
   @ApiProperty({
     type: 'string',
@@ -95,7 +100,7 @@ export class ProjectModel extends Model<
     type: DataType.DATE,
     allowNull: true,
   })
-  start_date?: string;
+  start_date: string;
 
   @ApiProperty({
     type: 'string',
@@ -106,5 +111,5 @@ export class ProjectModel extends Model<
     type: DataType.DATE,
     allowNull: true,
   })
-  end_date?: string;
+  end_date: string;
 }

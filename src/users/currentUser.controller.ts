@@ -9,7 +9,7 @@ import {
   InternalServerErrorException,
 } from '@nestjs/common';
 import { UsersService } from './users.service';
-import { UserDto } from './dto/user.dto';
+import { UpdateUserDto } from './dto';
 import { UserModel } from '@app/common/database/models/user.model';
 import {
   ApiCookieAuth,
@@ -42,7 +42,7 @@ export class CurrentUserController {
   @ApiResponse({ status: HttpStatus.OK, type: UserModel })
   public async update(
     @CurrentUser('id') currentUserId: string,
-    @Body() dto: UserDto,
+    @Body() dto: UpdateUserDto,
     @Request() req: e.Request
   ) {
     await this.userService.update(currentUserId, dto);

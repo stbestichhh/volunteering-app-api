@@ -4,13 +4,14 @@ import {
 } from '@app/common/database/models/project.model';
 import {
   IsDateString,
+  IsEnum,
   IsNotEmpty,
   IsOptional,
   IsString,
 } from 'class-validator';
 import { ApiProperty } from '@nestjs/swagger';
 
-export class ProjectDto implements ProjectCreationAttributes {
+export class CreateProjectDto implements ProjectCreationAttributes {
   @IsString()
   @IsNotEmpty()
   @ApiProperty({
@@ -31,6 +32,7 @@ export class ProjectDto implements ProjectCreationAttributes {
 
   @IsString()
   @IsOptional()
+  @IsEnum(ProjectStatus)
   @ApiProperty({
     type: 'string',
     description: 'Project status',
@@ -39,21 +41,21 @@ export class ProjectDto implements ProjectCreationAttributes {
   })
   status: ProjectStatus;
 
-  @IsDateString()
-  @IsOptional()
+  @IsDateString({ strict: true })
+  @IsNotEmpty()
   @ApiProperty({
     type: 'string',
     description: 'Project start date in format (YYYY-MM-DD)',
     example: '2024-12-31',
   })
-  start_date?: string;
+  start_date: string;
 
-  @IsDateString()
-  @IsOptional()
+  @IsDateString({ strict: true })
+  @IsNotEmpty()
   @ApiProperty({
     type: 'string',
     description: 'Project start date in format (YYYY-MM-DD)',
     example: '2025-12-31',
   })
-  end_date?: string;
+  end_date: string;
 }

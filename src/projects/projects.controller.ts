@@ -28,7 +28,8 @@ import { AuthGuard } from '@app/common/guards';
 import { CurrentUser } from '@app/common/decorators';
 import { ProjectModel } from '@app/common/database/models';
 import { WhereOptions } from 'sequelize';
-import { ProjectDto } from './dto';
+import { CreateProjectDto } from './dto';
+import { UpdateProjectDto } from './dto/updateProject.dto';
 
 @UseGuards(AuthGuard)
 @ApiTags('Projects')
@@ -58,7 +59,7 @@ export class ProjectsController {
   @ApiNotFoundResponse({ description: 'No projects found using options' })
   @Get()
   public async getAll(
-    @CurrentUser() ownerId: string,
+    @CurrentUser('id') ownerId: string,
     @Query() options: WhereOptions<ProjectModel>
   ) {
     return await this.projectService.getAll(ownerId, options);
@@ -72,7 +73,10 @@ export class ProjectsController {
   })
   @Post()
   @HttpCode(HttpStatus.CREATED)
-  public async create(@CurrentUser() ownerId: string, @Body() dto: ProjectDto) {
+  public async create(
+    @CurrentUser('id') ownerId: string,
+    @Body() dto: CreateProjectDto
+  ) {
     return await this.projectService.create(ownerId, dto);
   }
 
@@ -81,9 +85,9 @@ export class ProjectsController {
   @ApiNotFoundResponse({ description: 'Project not found by id' })
   @Put(':id')
   public async update(
-    @CurrentUser() ownerId: string,
+    @CurrentUser('id') ownerId: string,
     @Param('id') projectId: string,
-    @Body() dto: ProjectDto
+    @Body() dto: UpdateProjectDto
   ) {
     return await this.projectService.update(ownerId, projectId, dto);
   }
@@ -94,7 +98,7 @@ export class ProjectsController {
   @Delete(':id')
   @HttpCode(HttpStatus.NO_CONTENT)
   public async delete(
-    @CurrentUser() ownerId: string,
+    @CurrentUser('id') ownerId: string,
     @Param('id') projectId: string
   ) {
     return await this.projectService.delete(ownerId, projectId);

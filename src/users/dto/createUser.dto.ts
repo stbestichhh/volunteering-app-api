@@ -9,7 +9,7 @@ import {
 } from 'class-validator';
 import { ApiProperty } from '@nestjs/swagger';
 
-export class UserDto implements UserCreationAttributes {
+export class CreateUserDto implements UserCreationAttributes {
   @IsString()
   @IsNotEmpty()
   @Matches(/^[A-Z][a-zA-Z'-]+ [A-Z][a-zA-Z'-]+(?: [A-Z][a-zA-Z'-]+)*$/, {
