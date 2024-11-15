@@ -18,7 +18,7 @@ function getHttpsOptions(): HttpsOptions {
       cert: fs.readFileSync(process.env.PUBLIC_CERTIFICATE_PATH),
       key: fs.readFileSync(process.env.PRIVATE_KEY_PATH),
     };
-  } catch (e) {
+  } catch {
     return undefined;
   }
 }
