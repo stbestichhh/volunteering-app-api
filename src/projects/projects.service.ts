@@ -1,4 +1,4 @@
-import { Injectable } from '@nestjs/common';
+import { ForbiddenException, Injectable } from '@nestjs/common';
 import { ProjectsRepository } from './projects.repository';
 import { WhereOptions } from 'sequelize';
 import { ProjectModel } from '@app/common/database/models';
@@ -8,27 +8,39 @@ import { UpdateProjectDto } from './dto/updateProject.dto';
 
 @Injectable()
 export class ProjectsService {
-  constructor(private readonly projectRespository: ProjectsRepository) {}
+  constructor(private readonly projectsRepository: ProjectsRepository) {}
 
   public async getOneById(ownerId: string, projectId: string) {
-    return await this.projectRespository.findOne({
+    return await this.projectsRepository.findOne({
       id: projectId,
       user_id: ownerId,
     });
   }
 
   public async getAll(ownerId: string, options: WhereOptions<ProjectModel>) {
-    return await this.projectRespository.findAll({
+    return await this.projectsRepository.findAll({
       ...options,
       user_id: ownerId,
     });
   }
 
   public async create(ownerId: string, dto: CreateProjectDto) {
-    return await this.projectRespository.create({
-      ...dto,
-      user_id: ownerId,
-    } as CreationAttributes<ProjectModel>);
+    let threw = false;
+    try {
+      await this.projectsRepository.findOne({
+        name: dto.name,
+        user_id: ownerId,
+      });
+    } catch {
+      threw = true;
+      return await this.projectsRepository.create({
+        ...dto,
+        user_id: ownerId,
+      } as CreationAttributes<ProjectModel>);
+    }
+    if (!threw) {
+      throw new ForbiddenException(`Project ${dto.name} already exists`);
+    }
   }
 
   public async update(

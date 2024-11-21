@@ -1,12 +1,15 @@
 import {
+  BelongsTo,
   Column,
   DataType,
   ForeignKey,
+  HasMany,
   Model,
   Table,
 } from 'sequelize-typescript';
 import { ApiProperty } from '@nestjs/swagger';
 import { UserModel } from '@app/common/database/models/user.model';
+import { EventModel } from '@app/common/database/models/event.model';
 
 export enum ProjectStatus {
   OPENED = 'OPENED',
@@ -48,7 +51,6 @@ export class ProjectModel extends Model<
   @Column({
     type: DataType.STRING,
     allowNull: false,
-    unique: true,
   })
   name: string;
 
@@ -91,6 +93,9 @@ export class ProjectModel extends Model<
   @ForeignKey(() => UserModel)
   user_id: string;
 
+  @BelongsTo(() => UserModel)
+  user: UserModel;
+
   @ApiProperty({
     type: 'string',
     description: 'Project start date in format (YYYY-MM-DD)',
@@ -112,4 +117,7 @@ export class ProjectModel extends Model<
     allowNull: true,
   })
   end_date: string;
+
+  @HasMany(() => EventModel)
+  events: Array<EventModel>;
 }

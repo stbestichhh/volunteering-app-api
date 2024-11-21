@@ -5,6 +5,7 @@ import { UsersModule } from './users/users.module';
 import { DatabaseModule } from '@app/common/database';
 import { AuthModule } from './auth/auth.module';
 import { ProjectsModule } from './projects/projects.module';
+import { EventsModule } from './events/events.module';
 
 @Module({
   imports: [
@@ -14,6 +15,7 @@ import { ProjectsModule } from './projects/projects.module';
     DatabaseModule,
     AuthModule,
     ProjectsModule,
+    EventsModule,
   ],
   controllers: [],
   providers: [],

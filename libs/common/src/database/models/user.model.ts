@@ -1,5 +1,6 @@
-import { Column, DataType, Model, Table } from 'sequelize-typescript';
+import { Column, DataType, HasMany, Model, Table } from 'sequelize-typescript';
 import { ApiProperty } from '@nestjs/swagger';
+import { ProjectModel } from '@app/common/database/models/project.model';
 
 export interface UserCreationAttributes {
   fullname: string;
@@ -52,4 +53,7 @@ export class UserModel extends Model<UserModel, UserCreationAttributes> {
     allowNull: false,
   })
   password: string;
+
+  @HasMany(() => ProjectModel)
+  projects: Array<ProjectModel>;
 }
