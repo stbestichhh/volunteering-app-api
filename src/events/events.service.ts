@@ -17,15 +17,11 @@ export class EventsService {
     eventId: string,
     project_id: string
   ) {
-    const event = await this.eventsRepository.findOne({
+    await this.checkProjectOwner(project_id, ownerId);
+    return await this.eventsRepository.findOne({
       id: eventId,
       project_id,
     });
-
-    if (event.project.user_id !== ownerId) {
-      throw new ForbiddenException();
-    }
-    return event;
   }
 
   public async getOne(
@@ -33,15 +29,11 @@ export class EventsService {
     project_id: string,
     options?: WhereOptions<EventModel>
   ) {
-    const event = await this.eventsRepository.findOne({
+    await this.checkProjectOwner(project_id, ownerId);
+    return await this.eventsRepository.findOne({
       ...options,
       project_id,
     });
-
-    if (event.project.user_id !== ownerId) {
-      throw new ForbiddenException();
-    }
-    return event;
   }
 
   public async getAll(
@@ -67,7 +59,7 @@ export class EventsService {
         project_id,
         name: dto.name,
       })
-      .catch();
+      .catch(() => false);
     if (found) {
       throw new ForbiddenException(`Event ${dto.name} already exists`);
     }

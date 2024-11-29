@@ -25,22 +25,20 @@ export class ProjectsService {
   }
 
   public async create(ownerId: string, dto: CreateProjectDto) {
-    let threw = false;
-    try {
-      await this.projectsRepository.findOne({
+    const found = await this.projectsRepository
+      .findOne({
         name: dto.name,
         user_id: ownerId,
-      });
-    } catch {
-      threw = true;
-      return await this.projectsRepository.create({
-        ...dto,
-        user_id: ownerId,
-      } as CreationAttributes<ProjectModel>);
-    }
-    if (!threw) {
+      })
+      .catch(() => false);
+    if (found) {
       throw new ForbiddenException(`Project ${dto.name} already exists`);
     }
+
+    return await this.projectsRepository.create({
+      ...dto,
+      user_id: ownerId,
+    } as CreationAttributes<ProjectModel>);
   }
 
   public async update(
