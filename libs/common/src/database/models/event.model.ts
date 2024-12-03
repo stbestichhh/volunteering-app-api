@@ -1,5 +1,6 @@
 import {
   BelongsTo,
+  BelongsToMany,
   Column,
   DataType,
   ForeignKey,
@@ -8,6 +9,8 @@ import {
 } from 'sequelize-typescript';
 import { ApiProperty } from '@nestjs/swagger';
 import { ProjectModel } from '@app/common/database/models/project.model';
+import { VolunteerModel } from '@app/common/database/models/volunteer.model';
+import { EventVolunteer } from '@app/common/database/models/event_volunteer.model';
 
 export enum EventStatus {
   OPENED = 'OPENED',
@@ -112,4 +115,10 @@ export class EventModel extends Model<EventModel, EventCreationAttributes> {
 
   @BelongsTo(() => ProjectModel)
   project: ProjectModel;
+
+  @ApiProperty({
+    description: 'Volunteers who takes part in it',
+  })
+  @BelongsToMany(() => VolunteerModel, () => EventVolunteer)
+  volunteers: Array<VolunteerModel>;
 }

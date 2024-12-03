@@ -6,6 +6,7 @@ import { DatabaseModule } from '@app/common/database';
 import { AuthModule } from './auth/auth.module';
 import { ProjectsModule } from './projects/projects.module';
 import { EventsModule } from './events/events.module';
+import { VolunteersModule } from './volunteers/volunteers.module';
 
 @Module({
   imports: [
@@ -16,6 +17,7 @@ import { EventsModule } from './events/events.module';
     AuthModule,
     ProjectsModule,
     EventsModule,
+    VolunteersModule,
   ],
   controllers: [],
   providers: [],
