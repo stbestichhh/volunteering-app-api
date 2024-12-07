@@ -3,7 +3,7 @@ import { CreateVolunteerDto } from './dto/create-volunteer.dto';
 import { UpdateVolunteerDto } from './dto/update-volunteer.dto';
 import { VolunteersRepository } from './volunteers.repository';
 import { WhereOptions } from 'sequelize';
-import { VolunteerModel } from '@app/common/database/models';
+import { EventModel, VolunteerModel } from '@app/common/database/models';
 
 @Injectable()
 export class VolunteersService {
@@ -13,6 +13,7 @@ export class VolunteersService {
     const volunteer =
       await this.volunteersRepository.create(createVolunteerDto);
     await volunteer.$set('events', []);
+    volunteer.events = [];
     return volunteer;
   }
 
@@ -20,12 +21,8 @@ export class VolunteersService {
     return await this.volunteersRepository.findAll(options);
   }
 
-  public async findOne(options: WhereOptions<VolunteerModel>) {
-    return await this.volunteersRepository.findOne(options);
-  }
-
   public async findOneByPk(volunteer_id: string) {
-    return await this.volunteersRepository.findByPk(volunteer_id);
+    return await this.volunteersRepository.findByPk(volunteer_id, EventModel);
   }
 
   public async update(

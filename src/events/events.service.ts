@@ -1,25 +1,22 @@
 import { ForbiddenException, Injectable } from '@nestjs/common';
 import { EventsRepository } from './events.repository';
 import { WhereOptions } from 'sequelize';
-import { EventModel } from '@app/common/database/models';
+import { EventModel, VolunteerModel } from '@app/common/database/models';
 import { CreateEventDto, UpdateEventDto } from './dto';
+import { CreationAttributes } from 'sequelize/types/model';
 
 @Injectable()
 export class EventsService {
   constructor(private readonly eventsRepository: EventsRepository) {}
 
   public async getOneById(eventId: string, project_id: string) {
-    return await this.eventsRepository.findOne({
-      id: eventId,
-      project_id,
-    });
-  }
-
-  public async getOne(project_id: string, options?: WhereOptions<EventModel>) {
-    return await this.eventsRepository.findOne({
-      ...options,
-      project_id,
-    });
+    return await this.eventsRepository.findOne(
+      {
+        id: eventId,
+        project_id,
+      },
+      VolunteerModel
+    );
   }
 
   public async getAll(project_id: string, options?: WhereOptions<EventModel>) {
@@ -43,7 +40,7 @@ export class EventsService {
     return await this.eventsRepository.create({
       ...dto,
       project_id,
-    });
+    } as CreationAttributes<EventModel>);
   }
 
   public async update(projectId: string, eventId: string, dto: UpdateEventDto) {

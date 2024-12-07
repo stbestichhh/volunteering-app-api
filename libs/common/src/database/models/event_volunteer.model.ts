@@ -6,23 +6,23 @@ import {
   Table,
 } from 'sequelize-typescript';
 import { ApiProperty } from '@nestjs/swagger';
-import { UserModel } from '@app/common/database/models/user.model';
-import { EventModel } from '@app/common/database/models/event.model';
+import { VolunteerModel, EventModel } from '@app/common/database/models';
 
-@Table({ tableName: 'event_volunteers' })
+@Table({ tableName: 'event_volunteers', timestamps: false })
 export class EventVolunteer extends Model<EventVolunteer> {
   @ApiProperty({
-    type: 'string',
-    description: 'Record uuid',
-    example: 'recorduuidv7',
+    type: 'number',
+    description: 'Record id',
+    example: 'recordid',
   })
   @Column({
-    type: DataType.STRING,
+    type: DataType.INTEGER,
     primaryKey: true,
     unique: true,
     allowNull: false,
+    autoIncrement: true,
   })
-  id: string;
+  id: number;
 
   @ApiProperty({
     type: 'string',
@@ -32,8 +32,8 @@ export class EventVolunteer extends Model<EventVolunteer> {
   @Column({
     type: DataType.STRING,
   })
-  @ForeignKey(() => UserModel)
-  user_id: string;
+  @ForeignKey(() => VolunteerModel)
+  volunteer_id: string;
 
   @ApiProperty({
     type: 'string',

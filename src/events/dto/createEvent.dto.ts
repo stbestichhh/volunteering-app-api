@@ -57,13 +57,4 @@ export class CreateEventDto implements EventCreationAttributes {
   @IsDateString({ strict: true })
   @IsNotEmpty()
   end_date: string;
-
-  @ApiProperty({
-    type: 'string',
-    description: 'Project id',
-    example: 'projectuuidv7',
-  })
-  @IsString()
-  @IsNotEmpty()
-  project_id: string;
 }

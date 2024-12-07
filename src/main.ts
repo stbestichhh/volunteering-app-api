@@ -27,9 +27,10 @@ function configureSwagger(app: INestApplication) {
   const swaggerConfig = new DocumentBuilder()
     .setTitle('Volunteering app API')
     .setVersion('0.0.1')
+    .addServer('api')
     .build();
   const document = SwaggerModule.createDocument(app, swaggerConfig);
-  SwaggerModule.setup('/docs', app, document);
+  SwaggerModule.setup('docs', app, document);
 }
 
 function configureSession(app: INestApplication, configService: ConfigService) {

@@ -52,7 +52,7 @@ export class VolunteersController {
   @ApiOkResponse({ type: [VolunteerModel] })
   @ApiNotFoundResponse({ description: 'Volunteers not found by options' })
   @ApiQuery({ type: VolunteerModel })
-  @Get('/all')
+  @Get()
   public async findAll(@Query() options: WhereOptions<VolunteerModel>) {
     return await this.volunteersService.findAll(options);
   }
@@ -63,15 +63,6 @@ export class VolunteersController {
   @Get(':id')
   public async findOneById(@Param('id') volunteer_id: string) {
     return await this.volunteersService.findOneByPk(volunteer_id);
-  }
-
-  @ApiOperation({ summary: 'Get one volunteer from the public db' })
-  @ApiOkResponse({ type: VolunteerModel })
-  @ApiNotFoundResponse({ description: 'Volunteer not found by options' })
-  @ApiQuery({ type: VolunteerModel })
-  @Get()
-  public async findOne(@Query() options: WhereOptions<VolunteerModel>) {
-    return await this.volunteersService.findOne(options);
   }
 
   @ApiOperation({ summary: 'Update volunteer data' })

@@ -9,10 +9,12 @@ import {
   ProjectModel,
   VolunteerModel,
 } from '@app/common/database/models';
+import { VolunteersModule } from '../volunteers/volunteers.module';
 
 @Module({
   imports: [
     DatabaseModule.forFeature([EventModel, ProjectModel, VolunteerModel]),
+    VolunteersModule,
   ],
   providers: [EventsService, EventsRepository, ProjectsRepository],
   controllers: [EventsController],

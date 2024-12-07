@@ -8,6 +8,7 @@ import {
   UseGuards,
 } from '@nestjs/common';
 import {
+  ApiBody,
   ApiForbiddenResponse,
   ApiInternalServerErrorResponse,
   ApiOkResponse,
@@ -15,7 +16,7 @@ import {
   ApiTags,
   ApiUnauthorizedResponse,
 } from '@nestjs/swagger';
-import { CreateUserDto } from '../users/dto/createUser.dto';
+import { CreateUserDto } from '../users/dto';
 import { UsersService } from '../users/users.service';
 import { UserModel } from '@app/common/database/models';
 import e from 'express';
@@ -39,6 +40,15 @@ export class AuthController {
 
   @ApiOperation({ summary: 'Login to user account' })
   @ApiOkResponse({ type: UserModel })
+  @ApiBody({
+    schema: {
+      type: 'object',
+      properties: {
+        email: { type: 'string', example: 'myemail@email.com' },
+        password: { type: 'string', example: 'mystrongpass' },
+      },
+    },
+  })
   @ApiUnauthorizedResponse({ description: 'Email or password is incorrect' })
   @UseGuards(LocalGuard)
   @Post('/signin')

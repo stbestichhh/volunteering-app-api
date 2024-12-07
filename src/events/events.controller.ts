@@ -25,7 +25,7 @@ import {
   ApiUnauthorizedResponse,
 } from '@nestjs/swagger';
 import { AuthGuard } from '@app/common/guards';
-import { EventModel } from '@app/common/database/models';
+import { EventModel, EventStatus } from '@app/common/database/models';
 import { WhereOptions } from 'sequelize';
 import { CreateEventDto, UpdateEventDto } from './dto';
 import { ProjectOwnerInterceptor } from '../projects/projectOwner.interceptor';
@@ -57,22 +57,11 @@ export class EventsController {
     return await this.eventsService.getOneById(eventId, projectId);
   }
 
-  @ApiOperation({ summary: 'Get one event by its properties' })
-  @ApiOkResponse({ type: EventModel })
-  @ApiNotFoundResponse({ description: 'Event not found by options' })
-  @ApiQuery({ type: EventModel })
-  @Get()
-  public async getOne(
-    @Param('project_id') projectId: string,
-    @Query() options: WhereOptions<EventModel>
-  ) {
-    return await this.eventsService.getOne(projectId, options);
-  }
-
   @ApiOperation({ summary: 'Get all events by its properties' })
+  @ApiQuery({ required: false, name: 'status', enum: EventStatus })
   @ApiOkResponse({ type: EventModel })
   @ApiNotFoundResponse({ description: 'Events not found by options' })
-  @Get('/all')
+  @Get()
   public async getAll(
     @Param('project_id') projectId: string,
     @Query() options: WhereOptions<EventModel>

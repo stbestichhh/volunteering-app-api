@@ -26,7 +26,7 @@ import {
 } from '@nestjs/swagger';
 import { AuthGuard } from '@app/common/guards';
 import { CurrentUser } from '@app/common/decorators';
-import { ProjectModel } from '@app/common/database/models';
+import { ProjectModel, ProjectStatus } from '@app/common/database/models';
 import { WhereOptions } from 'sequelize';
 import { CreateProjectDto } from './dto';
 import { UpdateProjectDto } from './dto/updateProject.dto';
@@ -51,7 +51,7 @@ export class ProjectsController {
   }
 
   @ApiOperation({ summary: 'Get all projects by options' })
-  @ApiQuery({ type: ProjectModel })
+  @ApiQuery({ required: false, name: 'status', enum: ProjectStatus })
   @ApiOkResponse({
     type: [ProjectModel],
     description: 'Got all projects or found by options',

@@ -24,7 +24,6 @@ export interface EventCreationAttributes {
   status?: EventStatus;
   start_date: string;
   end_date: string;
-  project_id: string;
 }
 
 @Table({ tableName: 'events', timestamps: true })
