@@ -7,6 +7,7 @@ import { AuthModule } from './auth/auth.module';
 import { ProjectsModule } from './projects/projects.module';
 import { EventsModule } from './events/events.module';
 import { VolunteersModule } from './volunteers/volunteers.module';
+import { AppController } from './app.controller';
 
 @Module({
   imports: [
@@ -19,7 +20,7 @@ import { VolunteersModule } from './volunteers/volunteers.module';
     EventsModule,
     VolunteersModule,
   ],
-  controllers: [],
+  controllers: [AppController],
   providers: [],
 })
 export class AppModule {}
