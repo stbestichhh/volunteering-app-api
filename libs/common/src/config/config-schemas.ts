@@ -10,6 +10,8 @@ const developmentSchema = Joi.object({
   SESSION_SAVE_UNINITIALIZED: Joi.boolean().optional().default(false),
   SESSION_MAX_AGE: Joi.number().required(),
   REDIS_PASSWORD: Joi.string().required(),
+  REDIS_HOST: Joi.string().hostname().optional(),
+  REDIS_PORT: Joi.number().port().optional(),
 });
 
 const productionSchema = developmentSchema.append({});

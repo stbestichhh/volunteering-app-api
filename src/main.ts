@@ -35,6 +35,8 @@ function configureSwagger(app: INestApplication) {
 
 function configureSession(app: INestApplication, configService: ConfigService) {
   const redis = new Redis({
+    port: configService.get<number>('REDIS_PORT'),
+    host: configService.get<string>('REDIS_HOST'),
     password: configService.get<string>('REDIS_PASSWORD'),
   });
   const redisStore = new RedisStore({

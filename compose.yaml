@@ -11,6 +11,8 @@ services:
     depends_on:
       db:
         condition: service_healthy
+      redis:
+        condition: service_healthy
 
   db:
     image: postgres
@@ -32,5 +34,21 @@ services:
       timeout: 5s
       retries: 5
 
+  redis:
+    image: redis/redis-stack-server
+    ports:
+      - "${REDIS_PORT}:${REDIS_PORT}"
+    environment:
+      - REDIS_ARGS="--requirepass ${REDIS_PASSWORD}"
+    restart: always
+    volumes:
+      - redis_data:/data
+    healthcheck:
+      test: ["CMD", "redis-cli", "--raw", "incr", "ping"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+
 volumes:
   db-data:
+  redis_data:
