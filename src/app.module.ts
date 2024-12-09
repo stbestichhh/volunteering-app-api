@@ -8,6 +8,9 @@ import { ProjectsModule } from './projects/projects.module';
 import { EventsModule } from './events/events.module';
 import { VolunteersModule } from './volunteers/volunteers.module';
 import { AppController } from './app.controller';
+import { CacheModule } from '@app/common/cache';
+import { APP_INTERCEPTOR } from '@nestjs/core';
+import { CacheInterceptor } from '@nestjs/cache-manager';
 
 @Module({
   imports: [
@@ -19,8 +22,14 @@ import { AppController } from './app.controller';
     ProjectsModule,
     EventsModule,
     VolunteersModule,
+    CacheModule.registerAsync(),
   ],
   controllers: [AppController],
-  providers: [],
+  providers: [
+    {
+      provide: APP_INTERCEPTOR,
+      useClass: CacheInterceptor,
+    },
+  ],
 })
 export class AppModule {}
