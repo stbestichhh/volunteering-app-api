@@ -38,6 +38,7 @@ services:
     image: redis/redis-stack-server
     ports:
       - "${REDIS_PORT}:${REDIS_PORT}"
+    command: ["redis-server", "--requirepass", "${REDIS_PASSWORD}"]
     environment:
       - REDIS_ARGS="--requirepass ${REDIS_PASSWORD}"
     restart: always
