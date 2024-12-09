@@ -9,8 +9,10 @@ import { EventsModule } from './events/events.module';
 import { VolunteersModule } from './volunteers/volunteers.module';
 import { AppController } from './app.controller';
 import { CacheModule } from '@app/common/cache';
-import { APP_INTERCEPTOR } from '@nestjs/core';
+import { APP_GUARD, APP_INTERCEPTOR } from '@nestjs/core';
 import { CacheInterceptor } from '@nestjs/cache-manager';
+import { ThrottlerGuard } from '@nestjs/throttler';
+import { RateLimitterModule } from '@app/common/rate-limitter';
 
 @Module({
   imports: [
@@ -23,12 +25,17 @@ import { CacheInterceptor } from '@nestjs/cache-manager';
     EventsModule,
     VolunteersModule,
     CacheModule.registerAsync(),
+    RateLimitterModule,
   ],
   controllers: [AppController],
   providers: [
     {
       provide: APP_INTERCEPTOR,
       useClass: CacheInterceptor,
+    },
+    {
+      provide: APP_GUARD,
+      useClass: ThrottlerGuard,
     },
   ],
 })
