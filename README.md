@@ -62,6 +62,8 @@ Application vars:
   * REDIS_HOST
   * REDIS_PORT
   * REDIS_PASSWORD
+  * RAITO_HOST - host for Raito cache server
+  * RAITO_PORT - port for Raito cache server
 
 Docker compose vars:
   * PORT - application port
@@ -72,6 +74,8 @@ Docker compose vars:
   * POSTGRES_DB
   * REDIS_PORT
   * REDIS_PASSWORD
+  * RAITO_HOST
+  * RAITO_PORT
 
 
 ## Test

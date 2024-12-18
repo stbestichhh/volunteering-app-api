@@ -10,9 +10,9 @@ import { VolunteersModule } from './volunteers/volunteers.module';
 import { AppController } from './app.controller';
 import { CacheModule } from '@app/common/cache';
 import { APP_GUARD, APP_INTERCEPTOR } from '@nestjs/core';
-import { CacheInterceptor } from '@nestjs/cache-manager';
 import { ThrottlerGuard } from '@nestjs/throttler';
 import { RateLimitterModule } from '@app/common/rate-limitter';
+import { RaitoInterceptor } from '@raito-cache/nestjs';
 
 @Module({
   imports: [
@@ -31,7 +31,7 @@ import { RateLimitterModule } from '@app/common/rate-limitter';
   providers: [
     {
       provide: APP_INTERCEPTOR,
-      useClass: CacheInterceptor,
+      useClass: RaitoInterceptor,
     },
     {
       provide: APP_GUARD,

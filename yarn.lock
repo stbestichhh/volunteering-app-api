@@ -1439,6 +1439,29 @@ __metadata:
   languageName: node
   linkType: hard
 
+"@raito-cache/client@npm:latest":
+  version: 0.0.2
+  resolution: "@raito-cache/client@npm:0.0.2"
+  dependencies:
+    ws: "npm:^8.18.0"
+  checksum: 10c0/6d5ba0e45ffaa28edc33461dc2088d41c86f3ba15b92b5cb3453937b2a6a7b4e4271dd58673d16710348733cf27efa7cf8e6cba7162c6c9a3792b8957fb94c9d
+  languageName: node
+  linkType: hard
+
+"@raito-cache/nestjs@npm:^0.0.1":
+  version: 0.0.1
+  resolution: "@raito-cache/nestjs@npm:0.0.1"
+  dependencies:
+    "@raito-cache/client": "npm:latest"
+    ws: "npm:^8.18.0"
+  peerDependencies:
+    "@nestjs/common": "*"
+    express: "*"
+    rxjs: "*"
+  checksum: 10c0/e79b8514e3eec96db6e64c2422ad5140b28e7336c3454b2d78822ad88b3c5d1910f60004851c4fa6fb05d6670bb0c5d94eb011a2c04e0915f15886289dcb04ae
+  languageName: node
+  linkType: hard
+
 "@redis/bloom@npm:1.2.0, @redis/bloom@npm:^1.2.0":
   version: 1.2.0
   resolution: "@redis/bloom@npm:1.2.0"
@@ -8782,6 +8805,7 @@ __metadata:
     "@nestjs/swagger": "npm:^8.0.5"
     "@nestjs/testing": "npm:^10.0.0"
     "@nestjs/throttler": "npm:^6.2.1"
+    "@raito-cache/nestjs": "npm:^0.0.1"
     "@types/bcrypt": "npm:^5.0.2"
     "@types/express": "npm:^4.17.17"
     "@types/express-session": "npm:^1.18.0"
@@ -9022,6 +9046,21 @@ __metadata:
     imurmurhash: "npm:^0.1.4"
     signal-exit: "npm:^3.0.7"
   checksum: 10c0/a2c282c95ef5d8e1c27b335ae897b5eca00e85590d92a3fd69a437919b7b93ff36a69ea04145da55829d2164e724bc62202cdb5f4b208b425aba0807889375c7
+  languageName: node
+  linkType: hard
+
+"ws@npm:^8.18.0":
+  version: 8.18.0
+  resolution: "ws@npm:8.18.0"
+  peerDependencies:
+    bufferutil: ^4.0.1
+    utf-8-validate: ">=5.0.2"
+  peerDependenciesMeta:
+    bufferutil:
+      optional: true
+    utf-8-validate:
+      optional: true
+  checksum: 10c0/25eb33aff17edcb90721ed6b0eb250976328533ad3cd1a28a274bd263682e7296a6591ff1436d6cbc50fa67463158b062f9d1122013b361cec99a05f84680e06
   languageName: node
   linkType: hard
 

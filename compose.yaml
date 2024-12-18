@@ -11,6 +11,8 @@ services:
     depends_on:
       db:
         condition: service_healthy
+      raito:
+        condition: service_started
       redis:
         condition: service_healthy
 
@@ -49,6 +51,20 @@ services:
       interval: 10s
       timeout: 5s
       retries: 5
+
+  raito:
+    image: stbestich/raito-cache
+    ports:
+      - "${RAITO_PORT}:${RAITO_PORT}"
+    environment:
+      NODE_ENV: production
+      PORT: ${RAITO_PORT}
+      HOST: ${RAITO_HOST}
+    restart: always
+    tty: true
+    stdin_open: true
+    volumes:
+      - redis_data:/data
 
 volumes:
   db-data:
