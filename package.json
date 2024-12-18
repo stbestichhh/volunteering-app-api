@@ -33,6 +33,7 @@
     "@nestjs/sequelize": "^10.0.1",
     "@nestjs/swagger": "^8.0.5",
     "@nestjs/throttler": "^6.2.1",
+    "@raito-cache/nestjs": "^0.0.1",
     "@types/bcrypt": "^5.0.2",
     "@types/express-session": "^1.18.0",
     "bcrypt": "^5.1.1",

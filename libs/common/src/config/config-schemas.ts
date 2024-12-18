@@ -12,6 +12,8 @@ const developmentSchema = Joi.object({
   REDIS_PASSWORD: Joi.string().required(),
   REDIS_HOST: Joi.string().hostname().optional(),
   REDIS_PORT: Joi.number().port().optional(),
+  RAITO_HOST: Joi.string().hostname().optional(),
+  RAITO_PORT: Joi.number().port().optional(),
 });
 
 const productionSchema = developmentSchema.append({});
